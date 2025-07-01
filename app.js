@@ -1,5 +1,5 @@
 function handleBayar() {
-  const tonURL = "https://wallet.ton.org/transfer/UQBqVBfmlC7BDqerZ3x_HZv4sgUFEJ21WafwSneyeBZZp4U3?amount=0.5";
+  const tonURL = "https://wallet.ton.org/transfer/UQBqVBfmlC7BDqerZ3x_HZv4sgUFEJ21WafwSneyeBZZp4U3?amount=500000000";
   document.getElementById('status').textContent = "Mengalihkan ke dompet...";
   window.open(tonURL, "_blank");
 }
