@@ -1,5 +1,5 @@
 function handleBayar() {
-  const tonURL = "https://tonkeeper.app/transfer/UQBqVBfmlC7BDqerZ3x_HZv4sgUFEJ21WafwSneyeBZZp4U3?amount=500000000";
+  const tonURL = "https://app.tonkeeper.com/transfer/UQBqVBfmlC7BDqerZ3x_HZv4sgUFEJ21WafwSneyeBZZp4U3?amount=500000000";
   document.getElementById('status').textContent = "Mengalihkan ke dompet...";
   window.open(tonURL, "_blank");
 }
