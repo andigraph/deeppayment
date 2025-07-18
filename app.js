@@ -24,30 +24,33 @@ async function connectWallet() {
   }
 }
 
-async function handleBayar() {
-  const connectedWallet = await tonConnectUI.connectedWallet();
-  if (!connectedWallet) {
-    document.getElementById('status').textContent = 'Harap hubungkan wallet terlebih dahulu.';
-    return;
+  async function handleBayar() {
+    const connectedWallet = await tonConnectUI.connectedWallet();
+
+    if (!connectedWallet?.account?.address) {
+      document.getElementById("status").textContent = "Harap hubungkan wallet terlebih dahulu.";
+      return;
+    }
+
+    const walletAddress = connectedWallet.account.address;
+    document.getElementById("status").textContent = "Mengalihkan ke Tonkeeper...";
+
+    // Simpan status transaksi ke Google Sheets
+    await fetch("https://script.google.com/macros/s/AKfycbx-sOgpMhPreDOCH6uqaHT5PB15f-AYhMgR7p4fNB9iClu2V9e7Leu7-jqJvyZl1yDT-g/exec", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        wallet: walletAddress,
+        amount: "0.5 TON",
+        status: "Pending"
+      })
+    });
+
+    // Redirect langsung ke link Tonkeeper
+    const paymentUrl = "https://wallet.tonkeeper.com/transfer/0QCzyrSNbHbash569LIGTG_UcgZoJWRtnpljEQbLW_qyA0Of?amount=500000000";
+    window.open(paymentUrl, "_blank");
   }
 
-  document.getElementById('status').textContent = "Mengirim Transsaksi...";
-
-  await fetch("https://script.google.com/macros/s/AKfycbx-sOgpMhPreDOCH6uqaHT5PB15f-AYhMgR7p4fNB9iClu2V9e7Leu7-jqJvyZl1yDT-g/exec", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ wallet: connectedWallet, amount: "0.5 TON", status: "Pending" })
-  });
-
-  const tx = {
-    validUntil: Math.floor(Date.now() / 1000) + 600,
-    messages: [
-      {
-        address: "0QCzyrSNbHbash569LIGTG_UcgZoJWRtnpljEQbLW_qyA0Of",
-        amount: "500000000"
-      }
-    ]
-  };
   try {
     await tonConnectUI.sendTransaction(tx);
     document.getElementById('status').textContent = "Menunggu konfirmasi transaksi...";
