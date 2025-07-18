@@ -1,6 +1,7 @@
-// app.js
-const tonConnect = new TON_CONNECT.TonConnect({
-  manifestUrl: 'https://andigraph.github.io/deeppayment/tonconnect-manifest.json'
+
+const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+  manifestUrl: 'https://andigraph.github.io/deeppayment/tonconnect-manifest.json',
+  buttonRootId: 'connect-wallet-btn'
 });
 
 let connectedWallet = null;
