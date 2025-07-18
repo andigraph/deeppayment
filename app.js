@@ -1,6 +1,6 @@
 function handleBayar() {
   const walletAddress = Telegram.WebApp.initDataUnsafe.user?.id || "unknown";
-  const tonURL = "https://wallet.ton.org/transfer/0QCzyrSNbHbash569LIGTG_UcgZoJWRtnpljEQbLW_qyA0Of?amount=500000000";
+  const tonURL = "ton://transfer/0QCzyrSNbHbash569LIGTG_UcgZoJWRtnpljEQbLW_qyA0Of?amount=500000000";
 
   document.getElementById('status').textContent = "Mengalihkan ke dompet...";
 
@@ -13,7 +13,7 @@ function handleBayar() {
       status: "Pending"
     })
   }).then(() => {
-    window.open(tonURL, "_blank");
+    window.location.href = tonURL;
   }).catch(err => {
     document.getElementById('status').textContent = "Gagal menyimpan data transaksi.";
     console.error(err);
@@ -26,9 +26,7 @@ async function verifyPayment() {
   try {
     const res = await fetch("https://toncenter.com/api/v2/getTransactions?address=0QCzyrSNbHbash569LIGTG_UcgZoJWRtnpljEQbLW_qyA0Of&limit=10&to_lt=0&archival=false");
     const json = await res.json();
-curl -X 'GET' \
-  'https://toncenter.com/api/v2/getTransactions?address=0QCzyrSNbHbash569LIGTG_UcgZoJWRtnpljEQbLW_qyA0Of&limit=10&to_lt=0&archival=false' \
-  -H 'accept: application/json'
+
     const tx = json.result.find(tx =>
       tx.in_msg?.source === walletAddress &&
       parseInt(tx.in_msg.value) >= 490000000
