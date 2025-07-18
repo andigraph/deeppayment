@@ -1,8 +1,10 @@
+// Update full functions for TON payment with better support on Telegram Android
+
 function handleBayar() {
   const walletAddress = Telegram.WebApp.initDataUnsafe.user?.id || "unknown";
-  const tonURL = "ton://transfer/0QCzyrSNbHbash569LIGTG_UcgZoJWRtnpljEQbLW_qyA0Of?amount=500000000";
+  const tonkeeperURL = "ton://transfer/UQCzyrSNbHbash569LIGTG_UcgZoJWRtnpljEQbLW_qyA0Of?amount=500000000";
 
-  document.getElementById('status').textContent = "Mengalihkan ke dompet...";
+  document.getElementById('status').textContent = "Mengalihkan ke Tonkeeper...";
 
   fetch("https://script.google.com/macros/s/AKfycbx-sOgpMhPreDOCH6uqaHT5PB15f-AYhMgR7p4fNB9iClu2V9e7Leu7-jqJvyZl1yDT-g/exec", {
     method: "POST",
@@ -13,7 +15,8 @@ function handleBayar() {
       status: "Pending"
     })
   }).then(() => {
-    window.location.href = tonURL;
+    // Redirect langsung agar bisa dibuka via Telegram Android WebView
+    window.location.href = tonkeeperURL;
   }).catch(err => {
     document.getElementById('status').textContent = "Gagal menyimpan data transaksi.";
     console.error(err);
