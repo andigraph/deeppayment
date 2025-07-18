@@ -25,12 +25,13 @@ async function connectWallet() {
 }
 
 async function handleBayar() {
+  const connectedWallet = await tonConnectUI.connectedWallet();
   if (!connectedWallet) {
     document.getElementById('status').textContent = 'Harap hubungkan wallet terlebih dahulu.';
     return;
   }
 
-  document.getElementById('status').textContent = "Mengalihkan ke dompet...";
+  document.getElementById('status').textContent = "Mengirim Transsaksi...";
 
   await fetch("https://script.google.com/macros/s/AKfycbx-sOgpMhPreDOCH6uqaHT5PB15f-AYhMgR7p4fNB9iClu2V9e7Leu7-jqJvyZl1yDT-g/exec", {
     method: "POST",
@@ -48,7 +49,7 @@ async function handleBayar() {
     ]
   };
   try {
-    await tonConnect.sendTransaction(tx);
+    await tonConnectUI.sendTransaction(tx);
     document.getElementById('status').textContent = "Menunggu konfirmasi transaksi...";
     setTimeout(verifyPayment, 15000);
   } catch (err) {
