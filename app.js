@@ -1,6 +1,6 @@
 function handleBayar() {
   const walletAddress = Telegram.WebApp.initDataUnsafe.user?.id || "unknown";
-  const tonkeeperURL = "ton://transfer/UQCzyrSNbHbash569LIGTG_UcgZoJWRtnpljEQbLW_qyA0Of?amount=500000000";
+  const tonkeeperURL = "https://wallet.ton.org/transfer/UQCzyrSNbHbash569LIGTG_UcgZoJWRtnpljEQbLW_qyA0Of?amount=500000000";
 
   document.getElementById('status').textContent = "Mengalihkan ke Tonkeeper...";
 
